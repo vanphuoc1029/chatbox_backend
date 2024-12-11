@@ -19,7 +19,7 @@ import { DataSource } from 'typeorm';
             password: process.env.DB_PASSWORD,
             database: process.env.DB_NAME,
             synchronize: true,
-            ssl: process.env.ENV === 'production',
+            ssl: process.env.NODE_ENV === 'production',
             entities: [__dirname + '/../**/*.entity{.ts,.js}'],
           });
           await dataSouce.initialize();
