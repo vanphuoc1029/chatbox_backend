@@ -1,4 +1,5 @@
 import { Module, Global } from '@nestjs/common';
+import { parse } from 'path';
 import { DataSource } from 'typeorm';
 
 @Global()
@@ -12,12 +13,13 @@ import { DataSource } from 'typeorm';
         try {
           const dataSouce = new DataSource({
             type: 'postgres',
-            host: 'localhost',
-            port: 5432,
-            username: 'postgres',
-            password: '18091996',
-            database: 'ChatBox',
+            host: process.env.DB_HOST,
+            port: parseInt(process.env.DB_PORT),
+            username: process.env.DB_USERNAME,
+            password: process.env.DB_PASSWORD,
+            database: process.env.DB_NAME,
             synchronize: true,
+            ssl: process.env.ENV === 'production',
             entities: [__dirname + '/../**/*.entity{.ts,.js}'],
           });
           await dataSouce.initialize();
